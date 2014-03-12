@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>e3d81634-b0e5-4b08-ac69-6276a40e6f77</ProjectGuid>
+    <ProjectTypeGuids>{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}</ProjectTypeGuids>
+    <AppIdentifier>com.directit.MobileAppDemo</AppIdentifier>
+    <ProjectName>MobileAppDemo</ProjectName>
+    <IsRunnable>true</IsRunnable>
+    <FrameworkVersion>3.2.0</FrameworkVersion>
+    <AndroidPermissions>android.permission.WRITE_EXTERNAL_STORAGE;android.permission.BROADCAST_STICKY</AndroidPermissions>
+    <CorePlugins>org.apache.cordova.console;org.apache.cordova.device;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.keyboard;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.statusbar</CorePlugins>
+    <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
+    <iOSStatusBarStyle>Default</iOSStatusBarStyle>
+    <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
+    <BundleVersion>1.0</BundleVersion>
+    <iOSDisplayName />
+    <iOSDeviceFamily>1;2</iOSDeviceFamily>
+    <iOSBackgroundMode />
+    <AndroidVersionCode>1</AndroidVersionCode>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
+</Project>

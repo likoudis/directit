@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8" />
+	<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+	<link href="styles/main.css" rel="stylesheet" />
+
+	<script src="cordova.js"></script>
+	<script src="kendo/js/jquery.min.js"></script>
+	<script src="kendo/js/kendo.mobile.min.js"></script>
+</head>
+<body>
+	<!--Home-->
+	<div id="tabstrip-home"
+		data-role="view"
+		data-title="Home">
+
+		<div class="view-content">
+			<h1>Welcome 1.0.51.0!</h1>
+			<a id="skin-change" data-role="button" data-click="app.changeSkin">Flat</a>
+			<p>
+				Direct IT Ltd - Mobile Application Sample
+			</p>
+			<div class="img"></div>
+		</div>
+	</div>
+
+	<!--Login-->
+	<div id="tabstrip-login"
+		data-role="view"
+		data-title="Login"
+		data-model="app.loginService.viewModel">
+
+		<div class="view-content">
+			<div class="logo"></div>
+			<h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
+			<h1 class="welcome" data-bind="visible: isLoggedIn">Welcome, <span data-bind="text: username"></span>!
+			</h1>
+			<div class="buttonArea">
+				<input type="submit" id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button" value="Logout" />
+			</div>
+
+			<form data-bind="events: { keyup: checkEnter }">
+				<ul data-role="listview" data-style="inset" data-bind="invisible: isLoggedIn">
+					<li>
+						<label>
+							Username
+								<input type="text" data-bind="value: username" />
+						</label>
+					</li>
+					<li>
+						<label>
+							Password
+								<input type="password" data-bind="value: password" />
+						</label>
+					</li>
+				</ul>
+
+				<div class="buttonArea">
+					<input type="submit" id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button" value="Login" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!--Tasks and Projects-->
+	<div id="tabstrip-taskPrj"
+		data-role="view"
+		data-title="TasksAndProjects"
+		data-init="app.taskPrjService.initTaskPrj"
+		data-model="app.taskPrjService.viewModel">
+
+		<ul style="font-size: 1.66em" data-bind="events: { keyup: checkEnter }">
+			<li>
+				<label>Currently on: 
+					<input id="currentPrjNameInput"
+						type="text" data-bind="value: currentPrjName" 
+						style="font-size: 1.33em; width: 10em">
+				</label>
+				<a data-role="button" data-rel="actionsheet" href="#actionsheet" data-icon="downloads" style="float:right">Insert</a>
+				<ul id="actionsheet" data-role="actionsheet" data-popup='{ "width": "auto"}'>
+					<li><a data-action="app.taskPrjService.onPrjRename">Rename</a></li>
+					<li><a data-action="app.taskPrjService.onPrjInsert">Insert</a></li>
+					<li><a data-action="app.taskPrjService.onPrjDelete">Delete</a></li>
+				</ul>
+			</li>
+		</ul>
+
+		<ul id="listview-taskPrj" data-role="listview" 
+			data-style="inset"
+			data-bind="source: taskPrjDataSource, click: projectSelect"
+			data-template="projectListTmpl"
+			style="font-size: 1.5em">
+		</ul>
+	</div>
+			
+	<!--Task & Prj List template-->
+	<script type="text/x-kendo-tmpl" id="projectListTmpl">
+		<a>#:name#</a>
+	</script>	
+
+	<!--Time tracking-->
+	<div id="tabstrip-timetrack" 
+		data-role="view" 
+		data-title="Time Track"
+		data-init="app.timetrackService.initTimeTrack"
+		data-model="app.timetrackService.viewModel"
+		data-show ="app.timetrackService.test">
+
+		<div style="font-size: 1.5em">
+			<p></p>
+			<span 
+				id="startButton"
+				data-role="button"
+				data-icon="play"
+				data-click="app.timetrackService.startClick"
+				style="width: 79px; margin-left: 4px">
+
+				Start
+            </span>
+			<span 
+				id="stopButton"
+				data-role="button"
+				data-icon="stop"
+				data-click="app.timetrackService.stopClick"
+				style="width: 79px; margin-left: 4px">
+
+				Stop
+            </span>
+			Now on: <span data-bind="text: currentPrjName"></span>
+			<span 
+				id="deleteButton"
+				data-role="button"
+				data-icon="delete"
+				data-click="app.timetrackService.delClick"
+				style="width: 89px; margin-right: 4px; float: right">
+
+				Delete
+            </span>
+		</div>
+
+		<div 
+			id="listview-prjSSPairs" 
+			data-role="listview" 
+			data-style="inset" 
+			data-bind="source: timeTrackDataSource"
+			data-template="timetrack-startstops-template"
+			style="margin-left:auto; margin-right:auto; width: 100%; font-size: 1.33em">
+		</div>
+	</div>
+
+	<!--Time Starts/Stops template-->
+	<script type="text/x-kendo-tmpl" id="timetrack-startstops-template">
+		<div>
+			<div class="position-left">#:start#</div>
+			<div class="position-right">#:stop#</div>
+		</div>
+	</script>
+
+	<!--Layout-->
+	<div data-role="layout" data-id="tabstrip-layout">
+
+		<!--Header-->
+		<div data-role="header">
+			<div data-role="navbar">
+				<span data-role="view-title"></span>
+			</div>
+		</div>
+
+		<!--Footer-->
+		<div data-role="footer">
+			<div data-role="tabstrip">
+				<a href="#tabstrip-home"      data-icon="home">Home</a>
+				<a href="#tabstrip-login"     data-icon="contacts">Login</a>
+				<a href="#tabstrip-taskPrj"   data-icon="bookmarks">Tasks</a>
+				<a href="#tabstrip-timetrack" data-icon="recents">Track</a>
+			</div>
+		</div>
+	</div>
+
+	<script src="scripts/dataHandler.js"></script>
+	<script src="scripts/viewHandler.js"></script>
+	<script src="scripts/app.js"></script>
+	<script src="scripts/login.js"></script>
+	<script src="scripts/task_prj.js"></script>
+	<script src="scripts/timetrack.js"></script>
+</body>
+</html>
