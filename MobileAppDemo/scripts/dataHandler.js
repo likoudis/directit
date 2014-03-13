@@ -60,6 +60,8 @@
 				app.prjSSPairs[i].start = t;
             }
 
+			app.currentSSPair.stop = undefined;
+
 			return (app.currentPrj.name);
 		},
 

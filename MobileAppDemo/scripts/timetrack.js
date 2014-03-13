@@ -49,35 +49,28 @@
 				{listName: "prjSSPairs" + app.currentPrj.id, start: today, stop: "Started..."});
 			app.currentSSPair = app.prjSSPairs[app.prjSSPairs.length-1];
 			this.timeTrackDataSource.data(app.prjSSPairs);
-			this.stopRefreshIntervalId = setInterval(this.refreshStop, 1000);
+			this.stopRefreshIntervalId = setInterval(this.refreshStop, 5000);
 		},
 		
 		refreshStop: function () {
 			clearInterval(this.stopRefreshIntervalId);
 			var today= new Date();
 			
-			var duration = today.getTime() - app.currentSSPair.start.getTime();
-			duration = new Date(duration);
-			duration = app.timetrackService.viewModel.toHHHmmss(duration);
-			
-			duration = app.timetrackService.viewModel.calculateDuration();
+			var duration = app.timetrackService.viewModel.calculateDuration();
 			
 			app.timetrackService.viewModel.timeTrackDataSource.at(
 				app.timetrackService.viewModel.timeTrackDataSource.data().length -1 ).stop = duration;
 			$("#listview-prjSSPairs").data("kendoMobileListView").refresh()
-			this.stopRefreshIntervalId = setInterval(this.refreshStop, 1000);
+			this.stopRefreshIntervalId = setInterval(this.refreshStop, 5000);
 		},
 
 		onStop: function() {
 			clearInterval(this.stopRefreshIntervalId);
 			this.stopRefreshIntervalId = null;
-			var today= new Date();
-			
-			var duration = today.getTime() - app.currentSSPair.start.getTime();
-			duration = new Date(duration);
-			duration = app.timetrackService.viewModel.toHHHmmss(duration);
 
-			app.currentSSPair.stop = this.calculateDuration();
+			var duration = this.calculateDuration();
+			
+			app.currentSSPair.stop = duration;
 			app.dataHandler.changeItem(app.prjSSPairs, app.currentSSPair);
 			this.timeTrackDataSource.data(app.prjSSPairs);
 		},
@@ -91,7 +84,7 @@
 				app.dataHandler.deleteItem(app.prjSSPairs, app.currentSSPair);
 			app.currentSSPair = app.prjSSPairs[app.prjSSPairs.length-1];
 			this.timeTrackDataSource.data(app.prjSSPairs);
-		},
+		}
 	});
 
 	app.timetrackService = {
@@ -102,22 +95,36 @@
 			$("#startButton").show();
 			$("#stopButton").hide();
 		},
-		onShow: function () {
-			app.timetrackService.viewModel.timeTrackDataSource.data(app.prjSSPairs);
-			if (app.currentSSPair === app.prjSSPairs[app.prjSSPairs.length-1])
+
+        onShow: function () {
+			if (app.currentSSPair.stop === "Started...")
 				return;
+			app.timetrackService.viewModel.timeTrackDataSource.data(app.prjSSPairs);
+			//app.timetrackService.viewModel.stopRefreshIntervalId = setInterval(
+		        //app.timetrackService.viewModel.refreshStop, 5000);
+
 			$("#startButton").show();
 			$("#stopButton").hide();
 		},
 		onHide: function () {
-			if (app.timetrackService.viewModel.stopRefreshIntervalId === null)
+		    var that = app.timetrackService.viewModel;
+			if (that.stopRefreshIntervalId === null)
 			    return;
 			//app.timetrackService.viewModel.onStop();
+			//Provisionally update stop, but current stop == Started...
 			//calculate duration
-			//
+			//update stop in database.
+			
+			var duration = that.calculateDuration();
+			app.currentSSPair.stop = duration;
+			app.dataHandler.changeItem(app.prjSSPairs, app.currentSSPair);
+			app.currentSSPair.stop = "Started...";
+			if (that.stopRefreshIntervalId !== null) {
+				clearInterval(this.stopRefreshIntervalId);
+				that.stopRefreshIntervalId = null;
+			}
 		},
-
-		startClick: function() {
+        startClick: function() {
 			app.timetrackService.viewModel.onStart();
 			$("#startButton").hide();
 			$("#stopButton").show();
