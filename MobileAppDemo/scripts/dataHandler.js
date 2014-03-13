@@ -55,6 +55,10 @@
 				localStorage["prjSSPairs" + app.currentPrj.id] = JSON.stringify([]);
 
 			app.prjSSPairs = JSON.parse(localStorage["prjSSPairs" + app.currentPrj.id]);
+			for (var i=0; i<app.prjSSPairs.length; i++) {
+				t = new Date(JSON.parse(JSON.stringify(app.prjSSPairs[i].start)));
+				app.prjSSPairs[i].start = t;
+            }
 
 			return (app.currentPrj.name);
 		},
@@ -66,8 +70,6 @@
 		addItem:    function(localArray, item) {
 			localArray.push(item);
 			var itemListName = item.listName;
-			if (itemListName !== "projects")
-				itemListName = "prjSSPairs" + app.currentPrj.id;
 			localArray[localArray.length - 1].id = localArray.length - 1;
 			localStorage[itemListName] = JSON.stringify(localArray);
 			return item;
@@ -79,7 +81,7 @@
 		},
 		deleteItem: function(localArray, item) {
 			var itemListName = item.listName;
-			localArray.splice(item.id, 1)
+			localArray.splice(item.id, 1);
 			localStorage[itemListName] = JSON.stringify(localArray);
 		}
 	}

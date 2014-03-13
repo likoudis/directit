@@ -52,13 +52,13 @@
         },
 
 		onPrjRename: function() {
-			editPrjList("rename");
+			app.taskPrjService.editPrjList("rename");
         },
 		onPrjInsert: function() {
-			editPrjList("insert");
+			app.taskPrjService.editPrjList("insert");
         },
 		onPrjDelete: function() {
-			editPrjList("delete");
+			app.taskPrjService.editPrjList("delete");
         }
 
     };

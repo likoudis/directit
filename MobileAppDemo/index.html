@@ -71,7 +71,7 @@
 		data-init="app.taskPrjService.initTaskPrj"
 		data-model="app.taskPrjService.viewModel">
 
-		<ul style="font-size: 1.66em" data-bind="events: { keyup: checkEnter }">
+		<ul style="font-size: 1.33em" data-bind="events: { keyup: checkEnter }">
 			<li>
 				<label>Currently on: 
 					<input id="currentPrjNameInput"
@@ -106,7 +106,8 @@
 		data-title="Time Track"
 		data-init="app.timetrackService.initTimeTrack"
 		data-model="app.timetrackService.viewModel"
-		data-show ="app.timetrackService.test">
+		data-show ="app.timetrackService.onShow"
+		data-hide ="app.timetrackService.onHide">
 
 		<div style="font-size: 1.5em">
 			<p></p>
