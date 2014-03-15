@@ -60,6 +60,7 @@
 				app.prjSSPairs[i].start = t;
             }
 
+//Signal that the project has changed.
 			app.currentSSPair.stop = undefined;
 
 			return (app.currentPrj.name);
