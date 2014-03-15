@@ -49,19 +49,19 @@
 				{listName: "prjSSPairs" + app.currentPrj.id, start: today, stop: "Started..."});
 			app.currentSSPair = app.prjSSPairs[app.prjSSPairs.length-1];
 			this.timeTrackDataSource.data(app.prjSSPairs);
-			this.stopRefreshIntervalId = setInterval(this.refreshStop, 5000);
+			this.stopRefreshIntervalId = setInterval(this.refreshStop, 1000);
 		},
 		
 		refreshStop: function () {
-			clearInterval(this.stopRefreshIntervalId);
-			var today= new Date();
+		    var that = app.timetrackService.viewModel;
+			clearInterval(that.stopRefreshIntervalId);
 			
 			var duration = app.timetrackService.viewModel.calculateDuration();
 			
-			app.timetrackService.viewModel.timeTrackDataSource.at(
-				app.timetrackService.viewModel.timeTrackDataSource.data().length -1 ).stop = duration;
-			$("#listview-prjSSPairs").data("kendoMobileListView").refresh()
-			this.stopRefreshIntervalId = setInterval(this.refreshStop, 5000);
+			that.timeTrackDataSource.at(
+				that.timeTrackDataSource.data().length -1 ).stop = duration;
+			$("#listview-prjSSPairs").data("kendoMobileListView").refresh();
+			that.stopRefreshIntervalId = setInterval(that.refreshStop, 1000);
 		},
 
 		onStop: function() {
@@ -97,20 +97,28 @@
 		},
 
         onShow: function () {
+		    var that = app.timetrackService.viewModel;
+		    
+		    if (app.currentSSPair.stop === undefined) { // project changed or first time
+				that.timeTrackDataSource.data(app.prjSSPairs);
+				$("#startButton").show();
+				$("#stopButton").hide();
+			}
 			if (app.currentSSPair.stop === "Started...")
-				return;
-			app.timetrackService.viewModel.timeTrackDataSource.data(app.prjSSPairs);
-			//app.timetrackService.viewModel.stopRefreshIntervalId = setInterval(
-		        //app.timetrackService.viewModel.refreshStop, 5000);
-
-			$("#startButton").show();
-			$("#stopButton").hide();
+				that.stopRefreshIntervalId = setInterval(
+		        	that.refreshStop, 1000);
 		},
 		onHide: function () {
 		    var that = app.timetrackService.viewModel;
-			if (that.stopRefreshIntervalId === null)
-			    return;
-			//app.timetrackService.viewModel.onStop();
+		    
+			if (that.stopRefreshIntervalId !== null) {
+				clearInterval(that.stopRefreshIntervalId);
+				that.stopRefreshIntervalId = null;
+			}
+
+		    if (app.currentSSPair.start === undefined) // first time
+				return;
+
 			//Provisionally update stop, but current stop == Started...
 			//calculate duration
 			//update stop in database.
@@ -119,10 +127,6 @@
 			app.currentSSPair.stop = duration;
 			app.dataHandler.changeItem(app.prjSSPairs, app.currentSSPair);
 			app.currentSSPair.stop = "Started...";
-			if (that.stopRefreshIntervalId !== null) {
-				clearInterval(this.stopRefreshIntervalId);
-				that.stopRefreshIntervalId = null;
-			}
 		},
         startClick: function() {
 			app.timetrackService.viewModel.onStart();
