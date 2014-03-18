@@ -11,6 +11,40 @@
         address: "",
         isGoogleMapsInitialized: false,
 
+		addressonMap: [{id:0, isOnMap:false}],
+		
+		permitsTodayDataSource: null,
+		
+		inspectionAddressOnMap : function (e) {
+			return e.isOnMap;
+		},
+
+		init: function () {
+		    var that = this,
+			//addressOnMap = [],
+			dataSource;
+
+			kendo.data.ObservableObject.fn.init.apply(that, []);
+
+			dataSource = new kendo.data.DataSource({
+				data: [
+					{id: 0, lon:00, lat:00, address: "address1", isOnMap: false},
+					{id: 1, lon:10, lat:10, address: "address2", isOnMap: true },
+					{id: 2, lon:20, lat:20, address: "address3", isOnMap: false},
+					{id: 3, lon:30, lat:30, address: "address4", isOnMap: false},
+					{id: 4, lon:40, lat:40, address: "address5", isOnMap: true },
+					{id: 5, lon:50, lat:50, address: "address6", isOnMap: true },
+					{id: 6, lon:60, lat:60, address: "address7", isOnMap: false}
+				],
+			});
+
+			this.set("permitsTodayDataSource", dataSource);
+			
+			//for (var i=0; i<dataSource.data().length; i++)
+			//	addressOnMap.push({id: dataSource.at(i).id, isOnMap:false});
+			//this.set("inspectionAddressonMap", addressOnMap);
+        },
+
         onNavigateHome: function () {
             var that = this,
                 position;
@@ -29,7 +63,7 @@
                 },
                 function (error) {
                     //default map coordinates
-                    position = new google.maps.LatLng(43.459336, -80.462494);
+                    position = new google.maps.LatLng(0,0);
                     map.panTo(position);
 
                     that._isLoading = false;
@@ -43,6 +77,11 @@
                     enableHighAccuracy: true
                 }
             );
+        },
+
+		onInspectionSelect: function (e) {
+			e.data.isOnMap = !e.data.isOnMap;
+			$("#listview-permitsToday").data("kendoMobileListView").refresh();
         },
 
         onSearchAddress: function () {
@@ -67,12 +106,12 @@
 
         showLoading: function () {
             if (this._isLoading) {
-                app.application.showLoading();
+                application.showLoading();
             }
         },
 
         hideLoading: function () {
-            app.application.hideLoading();
+            application.hideLoading();
         },
 
         _putMarker: function (position) {
@@ -99,7 +138,7 @@
 
             app.locationService.viewModel.set("isGoogleMapsInitialized", true);
 
-            mapOptions = {
+			mapOptions = {
                 zoom: 15,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 zoomControl: true,
@@ -115,7 +154,7 @@
             geocoder = new google.maps.Geocoder();
             app.locationService.viewModel.onNavigateHome.apply(app.locationService.viewModel, []);
         },
-
+		
         show: function () {
             if (!app.locationService.viewModel.get("isGoogleMapsInitialized")) {
                 return;

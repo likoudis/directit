@@ -9,6 +9,7 @@
 	<script src="cordova.js"></script>
 	<script src="kendo/js/jquery.min.js"></script>
 	<script src="kendo/js/kendo.mobile.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 </head>
 <body>
 	<!--Home-->
@@ -159,6 +160,61 @@
 		</div>
 	</script>
 
+	<!--Location-->
+    <div id="tabstrip-location"
+        data-role="view"
+        data-title="Location"
+        data-init="app.locationService.initLocation"
+        data-show="app.locationService.show"
+        data-hide="app.locationService.hide"
+        data-model="app.locationService.viewModel"
+        data-stretch="true">
+
+
+        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
+            Location requires internet connection to display the map.
+        </div>
+<!--        <div id="map-search-wrap" data-bind="visible: isGoogleMapsInitialized">
+            <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
+            <form onsubmit="return false;">
+                <input id="map-address" type="search" data-bind="value: address" placeholder="Address" />
+                <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
+            </form>
+        </div>
+		<div id="map-canvas" data-bind="visible: isGoogleMapsInitialized"></div>
+-->
+	
+		<div>
+			<ul id="listview-permitsToday" 
+				style="width: 32%; float:left"
+				data-role="listview"
+				data-bind="source: permitsTodayDataSource"
+				data-template="location-inspections-template">
+			</ul>
+			<p id="map-canvas"
+				style="width: 66%; float:right" 
+				data-bind="visible: isGoogleMapsInitialized">
+			</p>
+		</div>
+	</div>
+
+	<!--Inspection Address List template-->
+	<script type="text/x-kendo-tmpl" id="location-inspections-template">
+		<div>
+			#:address#
+			<a 
+				data-role="detailbutton" data-icon="contactadd"
+				data-bind="click:onInspectionSelect, invisible:inspectionAddressOnMap">
+				<span style="visibility:hidden">#:id#</span>
+			</a>
+			<a 
+				data-role="detailbutton" data-icon="rowdelete"
+				data-bind="click:onInspectionSelect, visible:inspectionAddressOnMap">
+				<span style="visibility:hidden">#:id#</span>
+			</a>
+		</div>
+	</script>
+		
 	<!--Layout-->
 	<div data-role="layout" data-id="tabstrip-layout">
 
@@ -176,7 +232,9 @@
 				<a href="#tabstrip-login"     data-icon="contacts">Login</a>
 				<a href="#tabstrip-taskPrj"   data-icon="bookmarks">Tasks</a>
 				<a href="#tabstrip-timetrack" data-icon="recents">Track</a>
+				<a href="#tabstrip-location"  data-icon="search">Location</a>
 			</div>
+   
 		</div>
 	</div>
 
@@ -186,5 +244,8 @@
 	<script src="scripts/login.js"></script>
 	<script src="scripts/task_prj.js"></script>
 	<script src="scripts/timetrack.js"></script>
+	<script src="scripts/location.js"></script>
+    
+    
 </body>
 </html>

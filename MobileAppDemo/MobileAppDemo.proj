@@ -7,8 +7,8 @@
     <ProjectName>MobileAppDemo</ProjectName>
     <IsRunnable>true</IsRunnable>
     <FrameworkVersion>3.2.0</FrameworkVersion>
-    <AndroidPermissions>android.permission.WRITE_EXTERNAL_STORAGE;android.permission.BROADCAST_STICKY</AndroidPermissions>
-    <CorePlugins>org.apache.cordova.console;org.apache.cordova.device;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.keyboard;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.statusbar</CorePlugins>
+    <AndroidPermissions>android.permission.BROADCAST_STICKY;android.permission.WRITE_EXTERNAL_STORAGE</AndroidPermissions>
+    <CorePlugins>org.apache.cordova.console;org.apache.cordova.device;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.keyboard;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.statusbar</CorePlugins>
     <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
@@ -18,6 +18,15 @@
     <iOSBackgroundMode />
     <AndroidVersionCode>1</AndroidVersionCode>
     <DisplayName />
+    <Author />
+    <Description>MobileAppDemo</Description>
+    <WP8Requirements />
+    <WP8Capabilities />
+    <WP8TileTitle />
+    <WP8ProductID>{e3d81634-b0e5-4b08-ac69-6276a40e6f77}</WP8ProductID>
+    <WP8PublisherID>{b7215b8a-1d40-4a40-916e-e364fb04c66a}</WP8PublisherID>
+    <WP8Publisher />
+    <WP8SupportedResolutions />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Telerik\ICE\Tools\Mobile\MobileTools.targets" />
 </Project>
