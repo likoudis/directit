@@ -61,16 +61,14 @@
 					new google.maps.LatLng(minLat, minLng),
 					new google.maps.LatLng(maxLat, maxLng)
 				);
-				var position = new google.maps.LatLng((maxLat+minLat)/2, (maxLng+minLng)/2)
 
 				map.fitBounds(bounds);
 				t=that.permitsTodayDataSource.at(e.data.id);
 				if (app.locationService.viewModel.mapMarkers[e.data.id] === null) {
-					position = new google.maps.LatLng(t.lat, t.lng)
+					var position = new google.maps.LatLng(t.lat, t.lng)
 					var m = new google.maps.Marker({
 						map: map,
 						position: position,
-						animation: google.maps.Animation.DROP,
 						title: t.address
 
 					});
