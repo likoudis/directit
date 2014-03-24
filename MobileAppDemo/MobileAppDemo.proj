@@ -8,7 +8,7 @@
     <IsRunnable>true</IsRunnable>
     <FrameworkVersion>3.2.0</FrameworkVersion>
     <AndroidPermissions>android.permission.BROADCAST_STICKY;android.permission.WRITE_EXTERNAL_STORAGE</AndroidPermissions>
-    <CorePlugins>org.apache.cordova.console;org.apache.cordova.device;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.keyboard;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.statusbar</CorePlugins>
+    <CorePlugins>org.apache.cordova.camera;org.apache.cordova.media-capture;org.apache.cordova.console;org.apache.cordova.device;org.apache.cordova.file;org.apache.cordova.file-transfer;org.apache.cordova.geolocation;org.apache.cordova.keyboard;org.apache.cordova.network-information;org.apache.cordova.dialogs;org.apache.cordova.splashscreen;org.apache.cordova.statusbar</CorePlugins>
     <DeviceOrientations>Portrait;Landscape</DeviceOrientations>
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>

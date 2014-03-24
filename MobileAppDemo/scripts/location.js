@@ -90,8 +90,8 @@
 			that.showLoading();
 
 			navigator.geolocation.getCurrentPosition(
-				function (position) {
-					position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				function (position) {					position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
 					map.panTo(position);
 					that._putMarker(position);
 
@@ -110,8 +110,8 @@
 						function () { }, "Location failed", 'OK');
 				},
 				{
-					timeout: 10000,
-					enableHighAccuracy: true
+					timeout: 30000,
+					enableHighAccuracy: false
 				}
 			);
 		},
